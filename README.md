@@ -1,6 +1,6 @@
-# Kripkongs - Web UMKM Keripik Singkong Premium
+# 🌽 Kripkongs - Web UMKM Keripik Singkong Premium
 
-Aplikasi web sistem pemesanan dan katalog digital untuk UMKM **Kripkongs**, dikembangkan menggunakan framework Laravel untuk memenuhi Tugas Praktikum Cloud Computing Universitas Pamulang.
+Aplikasi web sistem pemesanan dan katalog digital untuk UMKM **Kripkongs**. Proyek ini dikembangkan menggunakan framework Laravel untuk memenuhi Tugas Praktikum Cloud Computing Universitas Pamulang.
 
 ---
 
@@ -15,140 +15,109 @@ Aplikasi web sistem pemesanan dan katalog digital untuk UMKM **Kripkongs**, dike
 
 ## 🚀 Fitur Utama
 
-1. **Halaman Publik:** Beranda, katalog produk dengan minimal 5 varian, dan formulir pemesanan online.
-2. **Dashboard Admin (3 Tab):**
-   - **Ringkasan Admin:** Statistik total produk dan pesanan terbaru.
-   - **Kelola Produk:** Tambah, edit, hapus, dan unggah gambar produk.
-   - **Pesanan Masuk:** Mengelola status pesanan pelanggan (Baru, Diproses, Selesai).
-3. **Keamanan dan Middleware:** Proteksi halaman `/admin/dashboard` khusus pengguna dengan role Admin.
-4. **Health Check Endpoint:** Endpoint `/health` yang mengembalikan respons `OK` untuk pemantauan server cloud.
+1. **Katalog Produk Publik:** Beranda interaktif, katalog digital lengkap dengan 12+ varian rasa (Balado, BBQ, Keju, dll.), dan formulir pemesanan online.
+
+2. **Dashboard Admin Terproteksi (3 Tab Utama):**
+   - **Ringkasan Admin:** Monitoring statistik total produk dan pesanan masuk secara langsung.
+   - **Kelola Produk:** Manajerial CRUD (Tambah, Edit, Hapus) serta fitur unggah gambar produk.
+   - **Pesanan Masuk:** Manajemen pemrosesan status pesanan pelanggan (Baru, Diproses, Selesai).
+
+3. **Keamanan & Middleware Otentikasi:** Proteksi ketat pada seluruh rute `/admin/dashboard` untuk mencegah akses dari pengguna tanpa hak akses (Guest/Publik).
+
+4. **Endpoint Health Check:** Fitur pemantauan server melalui *endpoint* `/health` yang mengembalikan respons `OK` (HTTP status 200).
 
 ---
 
-## 🛠️ Teknologi & Infrastruktur Cloud
+## 🛠️ Spesifikasi Teknologi & Infrastruktur Cloud
 
-- **Framework:** Laravel
-- **Bahasa Pemrograman:** PHP 8.2
-- **Database:** MySQL
-- **Frontend:** HTML5, Bootstrap 5, CSS, JavaScript, Font Awesome, dan Poppins Font.
-- **Cloud Provider:** IDCloudHost.
-- **Sistem Operasi Cloud:** Ubuntu Linux.
-- **Web Server:** Nginx.
-- **Version Control:** Git dan GitHub.
+- **Framework Backend:** Laravel (PHP 8.2)
+- **Database:** MySQL Server
+- **Frontend:** HTML5, Bootstrap 5, FontAwesome Icons, Poppins Font
+- **Version Control:** Git & GitHub (`sopiyannudin/kripkongs`)
+- **Cloud Provider:** IDCloudHost (Virtual Machine Ubuntu Linux - Data Center Jakarta, Indonesia)
+- **Web Server Cloud:** Nginx & PHP-FPM 8.2
 
 ---
 
-## 💻 Cara Menjalankan Aplikasi Secara Lokal
+## 💻 Panduan Menjalankan Aplikasi Secara Lokal
 
 ### 1. Clone Repository
 
-Jalankan perintah berikut di terminal:
-
 ```bash
-git clone https://github.com/SOPIYAN-3/kripkongs.git
+git clone https://github.com/sopiyannudin/kripkongs.git
 cd kripkongs
 ```
 
-### 2. Instal Dependensi
-
-Pastikan PHP, Composer, Node.js, dan npm sudah terpasang.
+### 2. Instal Dependensi PHP
 
 ```bash
 composer install
-npm install
 ```
 
-### 3. Konfigurasi Environment
+### 3. Konfigurasi Environment File
 
-Salin file `.env.example` menjadi `.env`.
+Salin file `.env.example` menjadi `.env`:
 
-Untuk Windows Command Prompt:
+```bash
+# Untuk Linux / macOS / Git Bash
+cp .env.example .env
 
-```bat
+# Untuk Windows Command Prompt
 copy .env.example .env
 ```
 
-Kemudian buat application key:
+Buka file `.env` dan sesuaikan variabel koneksi database lokal Anda:
 
-```bash
-php artisan key:generate
-```
-
-### 4. Konfigurasi Database
-
-Buat database MySQL sesuai konfigurasi proyek, lalu sesuaikan pengaturan berikut di file `.env`:
-
-```dotenv
+```ini
 DB_CONNECTION=mysql
 DB_HOST=127.0.0.1
 DB_PORT=3306
 DB_DATABASE=kripkongs_db
 DB_USERNAME=kripkongs_user
-DB_PASSWORD=isi_password_database
+DB_PASSWORD=kripkongs_1234
 ```
 
-Ganti `isi_password_database` dengan password database yang benar.
-
-Jalankan migrasi database:
+### 4. Generate Key & Migrasi Database
 
 ```bash
-php artisan migrate
+# Generate Key Aplikasi
+php artisan key:generate
+
+# Jalankan Migrasi dan Seeding Data Produk Awal
+php artisan migrate:fresh --seed
 ```
 
-Jika proyek menyediakan seeder dan membutuhkan data awal, jalankan:
-
-```bash
-php artisan db:seed
-```
-
-### 5. Jalankan Aplikasi
-
-Bangun aset frontend:
-
-```bash
-npm run build
-```
-
-Kemudian jalankan server pengembangan Laravel:
+### 5. Jalankan Server Lokal
 
 ```bash
 php artisan serve
 ```
 
-Buka aplikasi melalui alamat:
-
-`http://127.0.0.1:8000`
+Akses aplikasi melalui peramban di `http://127.0.0.1:8000`.
 
 ---
 
-## ☁️ Deployment Cloud dengan IDCloudHost
+## ☁️ Arsitektur & Deployment Cloud (IDCloudHost)
 
-Aplikasi Kripkongs menggunakan IDCloudHost sebagai penyedia layanan cloud. Deployment pada server cloud dilakukan melalui tahapan berikut:
+Deployment pada lingkungan produksi dilakukan pada Virtual Machine IDCloudHost dengan tahapan berikut:
 
-1. Menyiapkan Virtual Machine (VM) dengan sistem operasi Ubuntu Linux.
-2. Menginstal PHP beserta ekstensi Laravel, Composer, MySQL, Node.js, dan Nginx sesuai kebutuhan aplikasi.
-3. Mengambil source code dari repository GitHub.
-4. Mengatur konfigurasi `.env` untuk lingkungan produksi.
-5. Menyiapkan database dan menjalankan migrasi.
-6. Mengatur izin direktori `storage` dan `bootstrap/cache`.
-7. Mengonfigurasi Nginx agar mengarah ke direktori `public` Laravel.
-8. Menguji halaman publik, dashboard admin, pemesanan, dan endpoint `/health`.
-
-**Catatan:** Sesuaikan dokumentasi ini dengan konfigurasi dan tahapan deployment yang benar-benar dilakukan pada server IDCloudHost.
+1. **Penyediaan Server:** Mempersiapkan Virtual Machine Ubuntu LTS di Data Center Jakarta.
+2. **Instalasi LEMP Stack:** Konfigurasi Nginx, PHP 8.2 FPM, MySQL Server, Git, dan Composer.
+3. **Penerapan Kode:** Melakukan penarikan (*pull/clone*) kode langsung dari repositori GitHub.
+4. **Konfigurasi Lingkungan:** Pengesetan file `.env` produksi, *generate app key*, serta eksekusi migrasi database (`php artisan migrate:fresh --seed --force`).
+5. **Izin Hak Akses File:** Pengaturan hak akses folder `storage` dan `bootstrap/cache` ke pengguna `www-data`.
+6. **Server Block Nginx:** Pengesetan direktori `public` Laravel sebagai *root directory* dan mengaktifkan respons `OK` pada lokasi `/health`.
 
 ---
 
-## 🔐 Keamanan Aplikasi
+## 🔐 Keamanan & Pemantauan Sistem
 
-- File `.env` tidak boleh diunggah ke repository publik.
-- Gunakan `APP_DEBUG=false` pada lingkungan produksi.
-- Lindungi halaman admin dengan autentikasi dan otorisasi.
-- Gunakan kredensial database yang aman dan memiliki hak akses seperlunya.
-- Aktifkan HTTPS setelah domain dan sertifikat SSL dikonfigurasi.
+- **Perlindungan Kredensial:** File sensitif `.env` diabaikan oleh Git melalui `.gitignore` untuk mencegah kebocoran data rahasia.
+- **Uji Penetrasi Akses Admin:** Pengujian URL `/admin/dashboard` menggunakan mode penyamaran (*Incognito*) terbukti secara otomatis memblokir *guest* dan mengarahkan kembali ke halaman utama dengan pesan peringatan.
+- **Pemantauan Kesehatan Server:** Status ketersediaan server dapat dipantau kapan saja melalui akses ke URL `http://[IP_PUBLIK_SERVER]/health`.
 
 ---
 
 ## 📄 Tujuan Proyek
 
-Proyek ini dibuat untuk memenuhi Tugas Praktikum Cloud Computing Universitas Pamulang sekaligus menerapkan pengembangan aplikasi web, pengelolaan database, version control, keamanan aplikasi, dan deployment pada layanan cloud.
-
+Dokumentasi dan proyek aplikasi web ini disusun untuk memenuhi **Tugas Praktikum Cloud Computing Universitas Pamulang**, sekaligus menerapkan praktik terbaik dalam pengembangan aplikasi web modern, manajemen database, *version control*, proteksi keamanan, dan *deployment* server *cloud*.
