@@ -55,7 +55,4 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::delete('/admin/pesanan/delete/{id}', [HomeController::class, 'destroyPesanan'])
         ->name('pesanan.destroy');
 
-    Route::get('/health', function () {
-        return response('OK', 200)->header('Content-Type', 'text/plain');
-    });
 });
